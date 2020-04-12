@@ -174,6 +174,8 @@ int main(int argc, char **argv)
     // So update will be triggered after the provided
     // amount of time. 
     // `glitTimerFunc(unsigned int msecs, void (*func)(int value), value)`
+    // There is also a `glutTimerFunc` in `update`, called recursively
+    // callbacked after the given timelimit, permitting the update to happen. 
     glutTimerFunc(25, update, 0);
 
     glutMainLoop();
