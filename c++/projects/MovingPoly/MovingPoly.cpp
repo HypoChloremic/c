@@ -19,34 +19,67 @@ double x,y;
 // of the star. I have created a pointer
 // to a double value, the actual type of the 
 // the thing is a double pointer. 
-double* TriangleMatrix[3][2];
 
-void Pol(double* matrix[][]){
+
+void Pol(double matrix[][2]){
+
 	// `sizeof matrix` is the size of the matrix as a whole
 	// in memory. And the size of `sizeof matrix[0]` is the 
 	// size of the 'row-array'
-	int rows = sizeof matrix / sizeof matrix[0]; // 2 rows  
+	//int rows = sizeof matrix / sizeof matrix[0];  
 	
 	// `sizeof double` is the size of the element
-	int cols = sizeof matrix[0] / sizeof(double); // 5 cols
+	//int cols = sizeof matrix[0] / sizeof(double);
 
 	glBegin(GL_TRIANGLES);
 
-	for (int i = 0; i < rows; ++i){
-		for (int j = 0; j < cols; ++j)
-		{
-			glColor3i(100, 23, 2);
-			glVertex2i(x1, y1);
-			glVertex2i(x1, y1);
-			glVertex2i(x1, y1);
-			/* code */
-		}
-			
+	glColor3i(100, 23, 2);
+	
+	/*
+	std::cout << "Running Loop \n";
+	std::cout << cols <<"  "<< rows << "\n";
+	*/
+	std::cout << matrix[0][0] << "\n";
+
+	for (int i = 0; i < 3; ++i){
+			std::cout << "\n" << i;
+			glVertex2i(matrix[i][0], matrix[i][1]);
 	}
 
 	glEnd();
 
 }
+
+
+void Pol2(double* matrix){
+
+	// `sizeof matrix` is the size of the matrix as a whole
+	// in memory. And the size of `sizeof matrix[0]` is the 
+	// size of the 'row-array'
+	//int rows = sizeof matrix / sizeof matrix[0];  
+	
+	// `sizeof double` is the size of the element
+	//int cols = sizeof matrix[0] / sizeof(double);
+
+	glBegin(GL_TRIANGLES);
+
+	glColor3i(100, 23, 2);
+	
+	/*
+	std::cout << "Running Loop \n";
+	std::cout << cols <<"  "<< rows << "\n";
+	*/
+
+	// std::cout << matrix[0][0] << "\n";
+
+	for (int i = 0; i < 3; ++i){
+			glVertex2i(*(matrix + i*2), *((matrix + i*2) + 1));
+	}
+
+	glEnd();
+
+}
+
 
 
 void Circle(double j){
@@ -61,8 +94,8 @@ void Circle(double j){
 
 			Creating vertices that will be represented 
 			by dots. */
-			x = SCREEN_WIDTH/2 * cos(i);
-			y = SCREEN_HEIGHT/2 * sin(i);
+			x = (double)SCREEN_WIDTH/2 * cos(i);
+			y = (double)SCREEN_HEIGHT/2 * sin(i);
 			glVertex2i(x,y);
 		}
 	glEnd();
@@ -107,12 +140,19 @@ void init(void){
 	// Set window size in X- and Y- direction 
     gluOrtho2D(-780, 780, -420, 420); 
 
+
 }
 
 
 
 // function to display the animation
 void display(void){
+	std::cout << "Running triangleMatrix";
+	//double** TriangleMatrix;
+
+	double TriangleMatrix[][2] = {{ 100.0, 0.0},
+								   {-100.0, 0.0},
+								   { 0.0,  100.0}};
 	
     // Outer loop to make figure moving 
     // loop variable j iterated up to 10000, 
@@ -139,8 +179,16 @@ void display(void){
 		// Drawing axis
 		Axis();
 
+		std::cout << "Running Pol \n";
 		// Creating the polygon
-		Pol(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0)
+		//Pol(TriangleMatrix);
+		
+		// The parenthesis here is casting
+		Pol2((double*) TriangleMatrix);
+		
+		// One can also use 'address of' with the `&` operand
+		// in front of the matrix object
+		Pol2(&TriangleMatrix[0][0])
 
 		glFlush();
 	//}

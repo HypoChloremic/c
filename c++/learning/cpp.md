@@ -32,3 +32,10 @@ Allows us to group variables together. It is very much like a class. All objects
 ++i -> (return i + 1)
 i++ -> ((return i) + 1) 
 ```
+
+## Casting
+### Definition
+Casting is when we are telling the compiler that we are going to treat the subsequent shit as the stuff inside the parenthesis. 
+
+### Example
+In python we have `int(2.2) = 2`, which in a sense is casting. Likewise in c++ if I did `int k = (int) 2.2`, then `k = 2` because we casted it. We are telling the compiler to treat the subsequent code as the given type (in a sense telling the compiler to convert the code). 
