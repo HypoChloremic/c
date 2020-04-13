@@ -34,6 +34,7 @@ i++ -> ((return i) + 1)
 ```
 
 ## Casting
+
 ### Definition
 Casting is when we are telling the compiler that we are going to treat the subsequent shit as the stuff inside the parenthesis. 
 

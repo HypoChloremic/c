@@ -80,8 +80,6 @@ void Pol2(double* matrix){
 
 }
 
-
-
 void Circle(double j){
 	glBegin(GL_POINTS);
 		for (i = 0; i < 6.29; i+=0.001)
@@ -161,8 +159,7 @@ void display(void){
     // j is incremented by small value to make motion smoother 
 
     // I really dislike this method however.  
-    //for (j = 0; j < 10000; j += 0.01) 
-    //{ 
+    for (j = 0; j < 10000; j += 0.01) { 
 		/*
 		`glClear(GL_COLOR_BUFFER_BIT)` has the task to 
 		clear the screen with a default value, after a
@@ -179,19 +176,27 @@ void display(void){
 		// Drawing axis
 		Axis();
 
-		std::cout << "Running Pol \n";
-		// Creating the polygon
-		//Pol(TriangleMatrix);
 		
-		// The parenthesis here is casting
+		// #######################
+		// ### CHANGING MATRIX ###
+		// #######################
+		for (int i = 0; i < 3; ++i){
+			TriangleMatrix[i][0] += sin(j);
+		} 
+		// Creating the polygon
+		// Pol(TriangleMatrix);
+		
+		// The parenthesis here is casting, i.e the `(double*)`
+		// which tells the compiler to treat `TriangleMatrix` as 
+		// double pointer. 
 		Pol2((double*) TriangleMatrix);
 		
 		// One can also use 'address of' with the `&` operand
 		// in front of the matrix object
-		Pol2(&TriangleMatrix[0][0])
+		// Pol2(&TriangleMatrix[0][0])
 
 		glFlush();
-	//}
+	}
 }
 
 int main(int argc, char** argv)
