@@ -15,16 +15,37 @@
 float i,j;
 double x,y;
 
+// Aug went aspergers on me about the placement
+// of the star. I have created a pointer
+// to a double value, the actual type of the 
+// the thing is a double pointer. 
+double* TriangleMatrix[3][2];
 
-glm::vec4 myVector;
+void Pol(double* matrix[][]){
+	// `sizeof matrix` is the size of the matrix as a whole
+	// in memory. And the size of `sizeof matrix[0]` is the 
+	// size of the 'row-array'
+	int rows = sizeof matrix / sizeof matrix[0]; // 2 rows  
+	
+	// `sizeof double` is the size of the element
+	int cols = sizeof matrix[0] / sizeof(double); // 5 cols
 
-void Pol(double x1, double y1, double z1){
 	glBegin(GL_TRIANGLES);
-		glColor3i(100, 23, 2);
-		glVertex2i(x1, y1);
-		glVertex2i(x1, y1);
-		glVertex2i(x1, y1);
+
+	for (int i = 0; i < rows; ++i){
+		for (int j = 0; j < cols; ++j)
+		{
+			glColor3i(100, 23, 2);
+			glVertex2i(x1, y1);
+			glVertex2i(x1, y1);
+			glVertex2i(x1, y1);
+			/* code */
+		}
+			
+	}
+
 	glEnd();
+
 }
 
 
@@ -117,6 +138,9 @@ void display(void){
 
 		// Drawing axis
 		Axis();
+
+		// Creating the polygon
+		Pol(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 0)
 
 		glFlush();
 	//}

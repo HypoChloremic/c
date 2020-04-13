@@ -23,3 +23,12 @@ Allows us to group variables together. It is very much like a class. All objects
 
 2. The `-l[name]` flag denotes a library that needs to be included when compiling the code, and is a very important flag to consider. Note that there are several such flags in the aforementioned line of code, indicating that there are several libraries that are required for the compilation. 
 
+
+## Operations
+
+### Increments
+
+```
+++i -> (return i + 1)
+i++ -> ((return i) + 1) 
+```
