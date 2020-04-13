@@ -5,9 +5,6 @@
 #include <stdio.h>
 
 
-
-
-
 // Global declaration
 
 int x,y;

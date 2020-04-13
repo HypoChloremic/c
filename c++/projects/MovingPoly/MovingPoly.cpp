@@ -1,0 +1,168 @@
+// gcc MovingPoly.cpp -lGL -lGLU -lglut -lm -o MovingPoly
+
+#include <GL/glut.h>
+#include <math.h>
+#include <stdio.h>
+#include <iostream>
+
+
+// These are very important parameters to take
+// into consideration
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 600
+
+// Global declaration
+float i,j;
+double x,y;
+
+
+glm::vec4 myVector;
+
+void Pol(double x1, double y1, double z1){
+	glBegin(GL_TRIANGLES);
+		glColor3i(100, 23, 2);
+		glVertex2i(x1, y1);
+		glVertex2i(x1, y1);
+		glVertex2i(x1, y1);
+	glEnd();
+}
+
+
+void Circle(double j){
+	glBegin(GL_POINTS);
+		for (i = 0; i < 6.29; i+=0.001)
+		{
+		
+			/* This works mathematically when
+			we start considering the unit circle
+			that (cos i, sin i) for (x,y), generates
+			a circle.
+
+			Creating vertices that will be represented 
+			by dots. */
+			x = SCREEN_WIDTH/2 * cos(i);
+			y = SCREEN_HEIGHT/2 * sin(i);
+			glVertex2i(x,y);
+		}
+	glEnd();
+}
+
+void Axis(){
+
+	glBegin(GL_LINES);
+    	glVertex2f(0, -SCREEN_HEIGHT);
+    	glVertex2f(0, SCREEN_HEIGHT);
+	glEnd();
+
+	glBegin(GL_LINES);
+    	glVertex2f(SCREEN_WIDTH, 0);
+    	glVertex2f(-SCREEN_WIDTH, 0);
+	glEnd();
+
+}
+
+
+void VertexMatrix(){
+
+}
+
+
+// Initialization function
+void init(void){
+	// Reset background color with black
+	// since all three arguments are 0.0
+
+    glEnable(GL_COLOR_MATERIAL);
+
+    glClearColor(0.7f, 0.8f, 1.0f, 1.0f);
+
+	// Width of point
+	glPointSize(1.0);
+	glMatrixMode(GL_PROJECTION);
+
+	// Resetting transformation matrix. 
+	glLoadIdentity();
+
+	// Set window size in X- and Y- direction 
+    gluOrtho2D(-780, 780, -420, 420); 
+
+}
+
+
+
+// function to display the animation
+void display(void){
+	
+    // Outer loop to make figure moving 
+    // loop variable j iterated up to 10000, 
+    // indicating that figure will be in motion for large amount of time 
+    // around 10000/6.29 = 1590 time it will revolve 
+    // j is incremented by small value to make motion smoother 
+
+    // I really dislike this method however.  
+    //for (j = 0; j < 10000; j += 0.01) 
+    //{ 
+		/*
+		`glClear(GL_COLOR_BUFFER_BIT)` has the task to 
+		clear the screen with a default value, after a
+		certain time (usually 1/30th second or 1/60th second)
+		therefore, if there is a change to the coordinates
+		the display will change, therefore animating. 
+		*/
+
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Drawing Circle
+		Circle(j);
+
+		// Drawing axis
+		Axis();
+
+		glFlush();
+	//}
+}
+
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv); 
+      
+    // Display mode which is of RGB (Red Green Blue).
+    // we are specifying what the frame-buffer should 
+    // be. It is a kind of buffer that saves a frame. 
+    // Buffer is some block of memory (used alot for io operations
+    // makes them faster by prepping memory in some way) that 
+    // where we can save data for later use somehow. 
+
+    // GLUT_RGB and GLUT_SINGLE actually changes stuff, versus using 
+    // GLUT_DOUBLE. 
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB); 
+      
+    // Declares window size 
+    glutInitWindowSize(1360, 768); 
+      
+    // Declares window position which is (0, 0) 
+    // means lower left corner will indicate position (0, 0) 
+    glutInitWindowPosition(0, 0); 
+  
+    // Name to window  and creates it
+    glutCreateWindow("Moving Polygon"); 
+
+    // idlefunc is acallback that continuously updates
+    // the fade factor between two images over time. 
+    // (how to fade into the subsequent image)
+    // glutIdleFunc(&update_fade_factor)
+  
+    // Call to myInit() 
+    init();
+
+    // Callback functions
+    // Remember that the callback functions are setup in a way
+    // that they repaint the window upon callback. Situations which
+    // induces the callback can be window-resizing for instance. 
+    //
+    // Furthermore, the glutDisplayFunc renders our image, when 
+    // the window needs displaying. 
+    glutDisplayFunc(display); 
+    glutMainLoop(); 
+	return 0;
+}

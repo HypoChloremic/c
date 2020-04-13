@@ -49,61 +49,61 @@ void drawCube()
 
     // BACK
     glBegin(GL_POLYGON);
-    glColor3f(0.5, 0.3, 0.2);
-    glVertex3f(x, -y, z);
-    glVertex3f(x, y, z);
-    glVertex3f(-x, y, z);
-    glVertex3f(-x, -y, z);
+        glColor3f(0.5, 0.3, 0.2);
+        glVertex3f(x, -y, z);
+        glVertex3f(x, y, z);
+        glVertex3f(-x, y, z);
+        glVertex3f(-x, -y, z);
     glEnd();
 
-        // FRONT
-        glBegin(GL_POLYGON);
+    // FRONT
+    glBegin(GL_POLYGON);
         glColor3f(0.0, 0.5, 0.0);
         glVertex3f(-x, y, -z);
         glVertex3f(-x, -y, -z);
         glVertex3f(x, -y, -z);
         glVertex3f(x, y, -z);
-        glEnd();
+    glEnd();
 
-        // LEFT
-        glBegin(GL_POLYGON);
+    // LEFT
+    glBegin(GL_POLYGON);
         glColor3f(0.5, 0.5, 0.5);
         glVertex3f(-x, -y, -z);
         glVertex3f(-x, -y, z);
         glVertex3f(-x, y, z);
         glVertex3f(-x, y, -z);
-        glEnd();
+    glEnd();
 
 
-        // RIGHT
-        glBegin(GL_POLYGON);
+    // RIGHT
+    glBegin(GL_POLYGON);
         glColor3f(0.0, 0.0, 0.0);
         glVertex3f(x, -y, -z);
         glVertex3f(x, -y, z);
         glVertex3f(x, y, z);
         glVertex3f(x, y, -z);
-        glEnd();
+    glEnd();
 
-        // TOP
-        glBegin(GL_POLYGON);
+    // TOP
+    glBegin(GL_POLYGON);
         glColor3f(0.6, 0.0, 0.0);
         glVertex3f(x, y, z);
         glVertex3f(-x, y, z);
         glVertex3f(-x, y, -z);
         glVertex3f(x, y, -z);
-        glEnd();
+    glEnd();
 
 
-        // BOTTOM
-        glBegin(GL_POLYGON);
+    // BOTTOM
+    glBegin(GL_POLYGON);
         glColor3f(0.3, 0.0, 0.3);
         glVertex3f(-x, -y, -z);
         glVertex3f(-x, -y, z);
         glVertex3f(x, -y, z);
         glVertex3f(x, -y, -z);
-        glEnd();
+    glEnd();
 
-        glFlush();
+    glFlush();
     glutSwapBuffers();
 }
 
