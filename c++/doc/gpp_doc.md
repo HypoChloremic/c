@@ -190,10 +190,6 @@ For instance when initializing a vector class, with size `10` and vals `100.0`, 
 vector<int> matrix(3, 20); // the ...(3, 20) is feeding the constructor function with those parameters
 ```
 
- 
-
-
-
 # Typecasting
 
 ## Converting to new type, dynamically:
@@ -207,7 +203,18 @@ c = 30;
 float d = (float)a + (float)b + (float)c
 ```
 
+# Memory
+
+## Handling
+
+### Stack
+
+
+
+### Heap
+
 # Use C++17
+
 ## The command line operation
 
 To be able to c++17, the following needs to be used in the command line: 
