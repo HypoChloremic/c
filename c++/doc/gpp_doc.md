@@ -98,6 +98,102 @@ std::cout << arr[1][2]; // second row, third column, which doesnt exist. . .
 
 In this case, when performing the above, we note the above value being returned. 
 
+# Vectors
+
+Vectors are more versatile and address some of the annoying features of c++ arrays. Note that the c++ Vector object is not a mathematical vector. It is much like arrays still (e.g. in terms of accessing the data). 
+
+## Importing Vectors
+
+Is not part natively, but needs to be `#include` vectors:
+
+```c++
+#include <vector>
+```
+
+## Declaring vectors
+
+### One-dimensional
+
+```c++
+#include <vector>
+int main(){
+    vector<int> vector_obj_name;
+    vevtor<int> other_vector(4); // vector of size 4
+    return 0;
+}
+```
+
+So to declare a vector, one uses the template name `vector`, followed by the type of the object, in this case `int`.
+
+### Multi-dimensional
+
+```c++
+
+#include<bits/stdc++.h> 
+using namespace std; 
+int main(){ 
+    int n = 3; 
+    int m = 4; 
+    // Create a vector containing n 
+    //vectors of size m.  
+    vector<vector<int>> vec(n, vector<int> (m, 0));  
+return 0; 
+} 
+
+```
+
+
+
+## Appending data to vectors
+
+```c++
+vector<int> matrix;
+matrix.push_back(121);
+cout << matrix[0] << endl;
+
+>>> 121
+```
+
+## Initializing with spec val
+
+Say that we would like to initialize a vector with a specific value, such as 10, so all elements in the vector had the integer 10:
+
+```c++
+vector<int> matrix(5, 10); // creates a vector size 5, all with values 10
+vector<float> matrix2(10, 100.0); // creates a vector of size 10, with float vals 100.0
+```
+
+
+
+## Resizing
+
+There is a `.resize(newdim, init_val)` member function that can be used. if the new dimension is bigger than the current vector, than it will fill the empty components with `0`. If it is smaller, it will pop the last items of the vector.  Note that `init_val` if provided, will replace the empty components with that value. 
+
+# Templates
+
+# Classes
+
+## Member functions
+
+Is just like methods inside classes in python. For instance:
+
+```c++
+vector<int> matrix;
+matrix.push_back(121); // push_back is a member function of the vector class
+```
+
+## Constructor functions
+
+For instance when initializing a vector class, with size `10` and vals `100.0`, we call a constructor function (similar to `__init__` in python?). 
+
+```c++
+vector<int> matrix(3, 20); // the ...(3, 20) is feeding the constructor function with those parameters
+```
+
+ 
+
+
+
 # Typecasting
 
 ## Converting to new type, dynamically:
