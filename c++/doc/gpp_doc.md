@@ -1,4 +1,4 @@
-
+ 
 
 # Mathematical operations
 ## Summing
@@ -33,6 +33,35 @@ int main(int argc, char const *argv[])
 
 So seemingly, to output data for kattis, you are supposed to: ``std::cout << out << endl;`
 
+
+# Arrays and lists
+## Initialization
+### One-dimensional
+To initialize an array, the simplest way is to: 
+
+`int arr[2];` will initialize the variable `arr` with two positions.
+
+These can be assigned: `arr[0] = 10`, `arr[1] = 20`. 
+
+To access them, one can use the corresponding indices:
+
+```c++
+std::cout << arr[0];
+> 10
+```
+
+
+# Typecasting
+## Converting to new type, dynamically:
+
+```c++
+int a,b,c;
+a = 10;
+b = 20;
+c = 30;
+
+float d = (float)a + (float)b + (float)c
+```
 
 # Use C++17
 ## The command line operation
