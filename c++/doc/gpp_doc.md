@@ -128,19 +128,19 @@ So to declare a vector, one uses the template name `vector`, followed by the typ
 ### Multi-dimensional
 
 ```c++
-
-#include<bits/stdc++.h> 
-using namespace std; 
-int main(){ 
-    int n = 3; 
-    int m = 4; 
-    // Create a vector containing n 
-    //vectors of size m.  
-    vector<vector<int>> vec(n, vector<int> (m, 0));  
-return 0; 
-} 
-
+int n = 3; 
+int m = 4; 
+vector<vector<int>> vec(n, vector<int> (m, 121)); // n rows, m columns
+>>
+121 121 121 121 
+121 121 121 121 
+121 121 121 121 
 ```
+
+1. We want a type `vector` containing type `vector` of `int`. 
+2. For the constructor: 
+   1. we are saying that the initial dimension is `n`. 
+   2. for the second parameter: we are saying that we want to fill the vector at each component with `vector<int>` with the shape `m`, at each component of the new vector equalling `121`
 
 
 
