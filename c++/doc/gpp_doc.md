@@ -87,8 +87,19 @@ When initializing an array of different types, then the compiler will assign a s
 ## Errors
 ### Array Bounds
 
+If an array with pre-specified dimensions is accessed outside of those dimensions, it is not always that the compiler will discover that you are out of bounds with regard to the array. For instance:
+
+```c++
+int arr [2][2] = {{1,2},{3,4}};
+std::cout << arr[1][2]; // second row, third column, which doesnt exist. . . 
+>>> 358854752
+
+```
+
+In this case, when performing the above, we note the above value being returned. 
 
 # Typecasting
+
 ## Converting to new type, dynamically:
 
 ```c++
