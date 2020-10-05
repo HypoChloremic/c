@@ -3,7 +3,10 @@
 # Mathematical operations
 ## Summing
 
+
+
 # Input output operations
+
 ## Input  for kattis
 
 Seemingly, there is one general way of processing input (e.g. for kattis): 
@@ -56,8 +59,8 @@ These can be assigned: `arr[0] = 10`, `arr[1] = 20`.
 To access them, one can use the corresponding indices:
 
 ```c++
-arr[0] = 10`; 
-arr[1] = 20
+arr[0] = 10; 
+arr[1] = 20;
 std::cout << arr[0];
 > 10
 ```
