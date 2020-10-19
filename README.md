@@ -1,2 +1,2 @@
 # c
-Learning C and C++
+C and C++
