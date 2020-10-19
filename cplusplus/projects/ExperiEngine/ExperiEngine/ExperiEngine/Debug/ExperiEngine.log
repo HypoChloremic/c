@@ -1,0 +1,3 @@
+﻿  ExperiEngine.cpp
+c:\users\ali\documents\prwork\c\cplusplus\projects\experiengine\experiengine\experiengine\experiengine.cpp(17): error C4716: 'olcEngine3d::OnUserUpdate': must return a value
+c:\users\ali\documents\prwork\c\cplusplus\projects\experiengine\experiengine\experiengine\experiengine.cpp(13): error C4716: 'olcEngine3d::OnUserCreate': must return a value
