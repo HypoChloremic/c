@@ -1,17 +1,3 @@
-# Compilation
-
-## Windows
-
-### Command line
-
-To compile cpp code from the command line, go to the vis studio folder, and open the `Developer Command Prompt for VS 2017`. Check that it works correctly by running `>>> cl` in the terminal.
-
-To compile simple `.cpp` file:
-
-```
->>> cl /EHsc hello.cpp
-```
-
 
 
 # Mathematical operations
@@ -246,6 +232,224 @@ float d = (float)a + (float)b + (float)c
 
 ### Heap
 
+# Pointers
+
+Assume the RAM to be illustrated as the figure below:
+
+<img src="./figs/basics_9zhrPr2KII.png" alt="basisc_ram_fig" style="zoom:50%;" />
+
+The RAM is filled with a number of adresses, where each adress will correspond to a 32-bit value. 
+
+#### When declaring variables
+
+Let us declare some variable `a` by:
+
+```c
+int a = 5;
+```
+
+Let's assume that the variable name `a` is declared at the memory address `102`, and the corresponding value to that address is `5`. Thus whenever we see the variable name `a` in our program, we mean to lookup in RAM the memory address `102`, which in returns the value `5`.
+
+i.e.
+
+```c
+int a = 5; // will at some address, in this case 102, assign the 32-bit int value 5 to the address
+		   // such that when `a` appears in our program, we will lookup RAM[102] which retruns the 
+		   // 32-bit int value 5. 
+```
+
+To all intents and purposes, the variable name disappears: this is called ***direct addressing***, where we take a symbol (e.g. `a`) and it *directly corresponds to a location in RAM* (when we use `a` in our program, we mean to look at a specific location in RAM, to return the value stored there!). 
+
+#### Introducing the pointer
+
+<img src="./figs/basics_CXS3nkOFyt.png" alt="basics_pointer_memad" style="zoom:50%;" />
+
+In turn, a pointer is simply a symbol (variable name...) which holds a memory address. 
+
+Let us construct a variable type called `pointer`, where when called the compiler will select a location in memory, and the value held will be a memory address:
+
+```c
+int a = 5;
+pointer b = 100; // 100 is the memory address
+```
+
+In this case we tell the compiler that the symbol `b` corresponds to a pointer, which is a variable type holding memory addresses, and the value is `100` (i.e. `b` is a symbol which says to look at `RAM[104]`, which returns the value `100` which itself is a memory address. 
+
+Normally, one does not manually type in location in memory for pointers. Instead, one uses the `&` (ampersand symbol) to tell the compiler to get the address of the given variable:
+
+```c
+int a = 5;
+pointer b = &a; // this will store the address of `a` in the location of `b` in RAM
+				// if we follow our illustrated examples in the figures
+				// the value stored in `b` will be 102, because that is the address of `a`
+				
+```
+
+#### Indirect addressing
+
+<img src="./figs/basics_fhlRS1a2gA.png" alt="indirect_addressing" style="zoom:50%;" />
+
+Now that we have a variable symbol which stores an address, we would like a way to get that value. This is called indirect addressing. For this there is an operator that gets the value at the address: `*`
+
+```c
+int a = 5; 
+pointer b = &a;
+int c = *b; // we are telling the compiler get the value stored at the address 
+			// stored in b
+
+```
+
+thus `int c = *b -> c = 5` because we are telling the compiler to use the address stored in `b`, which in turn is the address for the `a`. When we look at the address of `a` we get the 32-bit int value `5`. This value is then  stored in the address that `c` is directly addressing, in this case `100` (see the figure above).  
+
+#### Summarizing the symbols
+
+So we have introduced a number of symbols:
+
+```c
+// & 		-> get address of 
+// * 		-> get value that the address points to 
+// int* var -> var is containing an address. at that adress there is an int value
+```
+
+and also, note that there is no variable type called `pointer`. instead we reuse the asterix symbol (again) to indicate pointer type.  Because it being important that the programmer and the compiler knows the type of what the actual value we are pointing to is. It got a bit convoluted:
+
+```c
+int a = 5;
+int* b = &a;
+int c = *b;
+```
+
+so with `int* b` we are saying that at the address of `b`, we are storing an address (by virteu of the `*`) which in turn points to an `int`-value in memory.
+
+#### why know type the ptr points to
+
+<img src="./figs/basics_gPkH1gxhIu.png" alt="address_type_imp" style="zoom:50%;" />
+
+There is a reason for the compiler to know what the type that an address points to is.
+
+Assume that at each address  we have a 1-byte value (i.e. 8-bits). 
+
+We know that in ``c or c++` program, an `int` will be a `32-bit ` value (4-bytes). Thus, when we do:
+
+```c
+int a = 5; 
+```
+
+the compiler will take up ***four*** locations in the RAM, because each memory address is 8-bits (1-byte), and 4 are required to store a 32-bit value. 
+
+When we therefore do:
+
+```c
+int a = 5;
+int* b = &a; // -> b = 100
+```
+
+so `b` will get the starting address of `a` and not where `a` also ends. 
+
+If we (just because) incremented by  `b = b + 1`, then we get `b = 102`. This new memory address points to one quarter of the way through the addresses that `a` occupies. This can cause malfunction. Instead if we wish to increment, i.e. move on to the next thing in memory, we need to add the `sizeof` an `int` to `b` to get to the next location:
+
+```c
+b = b + sizeof(int) //
+// -> 
+b = b + 4 // in our current system, such that we jump to 104 (look in the figure)
+```
+
+#### an implementation
+
+The following code is used:
+
+```c
+#include <iostream>
+using namespace std;
+int main()
+{
+	int SomeArray[10];	// each int is 32-bits = 4-bytes -> in total
+						// 40 bytes will have been assigned in memory
+						// which is continuous. 
+	int *pLocation6 = &SomeArray[6];	// so we want the address of the 
+										// 6th int element in the array
+	int *pLocation0 = &SomeArray[0];
+	
+	/*Now we wish to print the difference between these two 
+	memory addresses*/
+	cout << "pLocation6 = " << (int)pLocation6 << endl;
+	cout << "pLocation0 = " << (int)pLocation0 << endl;
+	cout << "Difference = " << pLocation6 - pLocation0 << endl;
+
+	cout << endl; system("Pause"); return 0;
+}
+
+
+```
+
+the output is 
+
+```
+pLocation6 = 5504288
+pLocation0 = 5504264
+Difference = 6
+
+Press any key to continue . . .
+```
+
+between index 6 and index 0, there are 6 elements, thus 6 addresses. We see that the difference between `5504288 - 5504264 = 24 `. However, when we take ask to print the difference, we get `6`. 
+
+The location for the 6th element is ***24 bytes larger*** than for the 0th element. However, when the program is subtracting them ***as integer pointers*** we get the result in `int`. Because each `int` is 4-bytes, we get:
+$$
+\frac{24~bytes}{4\frac{bytes}{int}} = 6~int
+$$
+
+##### conclusion
+
+The conclusion from the test is that the memory-addresses work on a per-byte space (i.e. 8-bit spaces, as we illustrated in the figures above). But the pointers work on a space defined by `int` for instance, which are 4-bytes large each. 
+
+#### The pointer as a type
+
+The pointer is a type. When we say `(int*)40` (i.e. that the value 40 is of type, aka typecast, to integer pointer type, it is counted in 4-byte hex). 
+
+```c
+for (int* i = 0; i < (int*)40; i++)
+{
+    cout << i << endl; 
+}
+```
+
+In the above loop we are saying that the `i` is of type integer pointer. the loop breaks at the integer pointer value of 40. When we then print `i`, we see that `i+1 => i + 4 bytes`, as ***it is incrementing by 4***!
+
+```c
+00000000
+00000004
+00000008
+0000000C
+00000010
+00000014
+00000018
+0000001C
+00000020
+00000024
+
+Press any key to continue . . .
+```
+
+
+
+#### pnt and arrays
+
+##### Iterating the addresses
+
+```c
+int SomeArray[10] = { 3, 6, 9, 12, 15, 18, 21, 24, 27, 30 };	
+
+for(int i = 0; i<10; i++)
+{
+	cout << "address: " << SomeArray + i; // this will print each hex adress, with 4 byte spaces
+	cout << " == " << *(SomeArray + i) << endl;
+}
+
+```
+
+When declaring an array, the variable symbol, in this case `SomeArray` carries the starting address of the array. `i` will be interpreted as $i \implies4\times i$ when interacting with the pointer. Thus when we add the initial address to 
+
 # Use C++17
 
 ## The command line operation
@@ -253,3 +457,18 @@ float d = (float)a + (float)b + (float)c
 To be able to c++17, the following needs to be used in the command line: 
 
 `g++ -std=c++1z [file].cpp -o [out file].out`
+
+# Compilation
+
+## Windows
+
+### Command line
+
+To compile cpp code from the command line, go to the vis studio folder, and open the `Developer Command Prompt for VS 2017`. Check that it works correctly by running `>>> cl` in the terminal.
+
+To compile simple `.cpp` file:
+
+```
+>>> cl /EHsc hello.cpp
+```
+
