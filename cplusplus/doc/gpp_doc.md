@@ -85,7 +85,43 @@ To compile simple `.cpp` file:
 >>> cl /EHsc hello.cpp
 ```
 
+## Directives
 
+### Pragmas
+
+* The ‘#pragma’ directive is the method specified by the C standard 
+* for providing additional information to the compiler, beyond what is conveyed in the language itself.
+* The forms of this directive (commonly known as *pragmas*) specified by C standard are prefixed with `STDC`.
+* **Any meaning**: A C compiler is free to attach any meaning it likes to other pragmas
+
+
+
+***Specifically***
+
+* **compiler-specific commands**: pragmas are compiler-specific commands. 
+* But after all, I would advise you to avoid pragmas as far it is possible, because as they are almost all, implementation defined, your code will be limited in portability if you use them.
+
+
+
+***Example***
+
+* They are used for example for generating user defined warnings or errors as with:
+
+  ```c
+  #pragma warning WARNINGMSG
+  
+  // or 
+  
+  #pragma error ERRORMSG
+  
+  // or as include guard with 
+  
+  #pragma once 
+  
+  // at the top of a headerfile.
+  ```
+
+  
 
 
 
