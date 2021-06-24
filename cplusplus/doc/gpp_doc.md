@@ -1,3 +1,41 @@
+## Use C++17
+
+### Hello World, fast
+
+`HelloWorldFast/main.cpp`
+
+```c++
+#include <iostream>
+
+int main(){
+        std::cout << "Hello World" << std::endl;
+        return 0
+
+}
+```
+
+Then in bash:
+
+```bash
+>> g++ main.cpp -o HelloWorld
+>> ./HelloWorld
+Hello World
+```
+
+
+
+### The command line operation
+
+To be able to c++17, the following needs to be used in the command line: 
+
+`g++ -std=c++1z [file].cpp -o [out file].out`
+
+
+
+
+
+
+
 ## Arrays and lists
 
 ### Initialization
@@ -498,16 +536,6 @@ float d = (float)a + (float)b + (float)c
 
 
 
-
-
-
-## Use C++17
-
-### The command line operation
-
-To be able to c++17, the following needs to be used in the command line: 
-
-`g++ -std=c++1z [file].cpp -o [out file].out`
 
 
 
