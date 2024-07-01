@@ -28,7 +28,9 @@ Hello World
 
 To be able to c++17, the following needs to be used in the command line: 
 
-`g++ -std=c++1z [file].cpp -o [out file].out`
+```bash
+> g++ -std=c++1z [file].cpp -o [out file].out
+```
 
 
 
@@ -105,7 +107,43 @@ vector<int> matrix(3, 20); // the ...(3, 20) is feeding the constructor function
 
 
 
+#### Class definitions
 
+#### Member initialization lists
+
+```cpp
+#include <iostream>
+using namespace std;
+ 
+class Point {
+    public:
+        Point(int i = 0, int j = 0): x(i), y(j) {}
+        /*  The above use of Initializer list is optional as the
+            constructor can also be written as:
+            Point(int i = 0, int j = 0) {
+                x = i;
+                y = j;
+            }
+        */
+
+        int getX() const { return x; }
+        int getY() const { return y; }
+
+    private:
+        int x;
+        int y;
+};
+
+int main()
+{
+    Point t1(10, 15);
+    cout << "x = " << t1.getX() << ", ";
+    cout << "y = " << t1.getY();
+    return 0;
+}
+```
+
+Note that we call the class name Point in the public: of the Point class. 
 
 
 
@@ -615,4 +653,119 @@ vector<float> matrix2(10, 100.0); // creates a vector of size 10, with float val
 There is a `.resize(newdim, init_val)` member function that can be used. if the new dimension is bigger than the current vector, than it will fill the empty components with `0`. If it is smaller, it will pop the last items of the vector.  Note that `init_val` if provided, will replace the empty components with that value. 
 
 
+
+
+
+
+
+## Headers
+
+### Introduction
+
+Header files in C++ play a crucial role in organizing and managing code in large software projects. They help in defining interfaces between different parts of a program and can significantly enhance code readability, maintainability, and reuse. Here’s a detailed overview of what header files are and how they are used in C++ programming:
+
+### What are Header Files?
+
+Header files in C++ are files with the `.h` or `.hpp` extension (though the extension is not enforced by the language). These files typically contain:
+
+1. **Declarations of functions and methods**: They specify the types and parameters of functions and methods but do not contain the full definitions (bodies) of the functions.
+2. **Class and struct definitions**: They include the definition of data structures along with their member variables and functions but often without the method implementations.
+3. **Templates**: Template definitions for classes and functions.
+4. **Macros**: Preprocessor macros which are snippets of code that get replaced by the preprocessor before compilation.
+5. **Constants**: Constant values that are used across different parts of the program.
+6. **#include directives**: To include other header files needed for declarations in the current header.
+7. **Inline functions**: Small functions defined within the header file that are advised to be compiled inline where they are called to optimize performance.
+
+### Purpose of Header Files
+
+- **Code Reusability**: Functions and classes defined in header files can be reused in different parts of a program or even in different projects.
+- **Code Organization**: They help in separating declarations from implementations, thus keeping the codebase more organized and manageable.
+- **Efficiency**: By declaring the interface in a header file, multiple source files can include these declarations and link against them without recompilation of the interface.
+
+### How to Use Header Files
+
+1. **Creating a Header File**: Define a header file by creating a `.h` or `.hpp` file. For instance, if you are creating a library to handle mathematical operations, you might create a `math_tools.h` file.
+   
+   Example (`math_tools.h`):
+   ```cpp
+   #ifndef MATH_TOOLS_H
+   #define MATH_TOOLS_H
+   
+   // Function to add two numbers
+   int add(int a, int b);
+   
+   #endif // MATH_TOOLS_H
+   ```
+
+2. **Including Header Files**: Use the `#include` directive to include the header file in a C++ source (.cpp) file where the declarations are needed.
+
+   Example (`main.cpp`):
+   ```cpp
+   #include "math_tools.h"
+
+   int main() {
+       int result = add(5, 3);
+       std::cout << "The sum is: " << result << std::endl;
+       return 0;
+   }
+   ```
+
+3. **Implementing Functions**: Implement the functions declared in the header file in a corresponding `.cpp` file.
+
+   Example (`math_tools.cpp`):
+   ```cpp
+   #include "math_tools.h"
+   
+   int add(int a, int b) {
+       return a + b;
+   }
+   ```
+
+### Best Practices
+
+- **Include Guards**: Use `#ifndef`, `#define`, and `#endif` preprocessor directives to prevent double inclusion of header files, which can lead to compilation errors.
+- **Minimal Include**: Include only necessary header files in other header files to reduce dependencies and compilation times.
+- **Separation of Declaration and Implementation**: Except for templates and inline functions, keep the implementation of functions in `.cpp` files to separate interface from implementation and to improve compile times.
+
+By adhering to these principles, you can effectively use header files to structure your C++ projects, making them more organized and efficient.
+
+In C and C++, `#ifndef`, `#define`, and `#endif` are preprocessor directives used primarily to prevent the contents of a header file from being included more than once in the same compilation unit. This technique is commonly known as an "include guard." Let's break down each directive and how they work together:
+
+### 1. `#ifndef`
+- **`#ifndef`** stands for "if not defined". This directive checks if a particular macro (essentially a label or placeholder text) has not been defined yet.
+- It begins a conditional directive, telling the preprocessor to compile the code that follows only if the specified macro has not been defined.
+
+### 2. `#define`
+- **`#define`** is used to define a macro. When used after `#ifndef`, it typically defines the macro that was just checked for. This ensures that if the header file is included again, the macro will already be defined.
+- The defined macro does not modify the program's runtime behavior but serves as a signal to the preprocessor.
+
+### 3. `#endif`
+- **`#endif`** ends a conditional preprocessor directive started by `#ifndef`.
+- It marks the end of the conditional code that should only be compiled based on the result of the `#ifndef` check.
+
+### Example of Include Guards
+
+Here’s how these are typically used in a header file to create include guards:
+
+```cpp
+#ifndef MY_HEADER_H
+#define MY_HEADER_H
+
+// All of the declarations and definitions of the header file go here
+void myFunction();
+int myVariable;
+
+#endif // MY_HEADER_H
+```
+
+- **Purpose**: The macro `MY_HEADER_H` is used as a unique identifier. If the header file is included multiple times in a project:
+  - The first time it's included, `MY_HEADER_H` is not defined, so the preprocessor enters the `#ifndef` block, defines `MY_HEADER_H`, and includes the contents of the header.
+  - Any subsequent inclusion of the same header will find `MY_HEADER_H` already defined, so the contents of the header are skipped, preventing double inclusion.
+
+### Benefits of Include Guards
+- **Avoid Redefinition Errors**: Multiple inclusions might lead to errors such as redefinition of classes, functions, or other identifiers.
+- **Reduce Compilation Time**: Preventing multiple inclusions of the same header file can significantly decrease the time it takes to compile large projects.
+- **Organize Code**: Helps in managing dependencies in complex projects where multiple files may depend on the same header file.
+
+In summary, `#ifndef`, `#define`, and `#endif` form a fundamental mechanism in C and C++ to manage the inclusion of header files and avoid common issues related to multiple inclusions. This technique enhances code safety and efficiency in larger projects.
 
