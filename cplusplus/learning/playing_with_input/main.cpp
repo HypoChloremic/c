@@ -25,8 +25,6 @@ bool luhn(const std::string& val){
 		
 	}
 	int checkSum = (10 - (sum % 10)) % 10;
-	std::cout << checkSum << std::endl;
-	std::cout << val[nDigits - 1] - '0' << std::endl;
 	if (checkSum == (val[nDigits-1] - '0')){
 		return true;
 	} else {
