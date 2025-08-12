@@ -4,19 +4,13 @@
 
 MARS is an assembler simulator, is an IDE for the MIPS assembly language. 
 
-
-
 ### Download and run
 
 Download the MARS simulator from the Missouri state uni page. It will ship a `.java` file. Run the file by `>>> java -jar MARS.jar`
 
-
-
 ### Writing and assembling code
 
 For a basic for loop in MIPS assembler:
-
-
 
 `./basic_loop.asm`
 
