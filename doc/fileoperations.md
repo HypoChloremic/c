@@ -308,7 +308,7 @@ Use **format strings** to
 
 ### scanf and fscanf
 ```c
-int fscan(FILE * restrict stream, const char * restrict format, ...);
+int fscanf(FILE * restrict stream, const char * restrict format, ...);
 int scanf(const char * restrict format, ...);
 ```
 * **Read data items** from input stream
@@ -335,3 +335,39 @@ Loops testing for scan EOF is common in C programs
 ```c
 while(scanf("%d", &i) == 1){}
 ```
+
+## Block IO
+### fread
+
+`fread(void *, unsigned long, unsigned long, FILE *)`  
+
+* Read elements of array from stream
+* takes parameters
+    * array's address
+    * size of each element (in bytes)
+    * number of elements to read (total size of array)
+    * file pointer
+
+To read contents of file to array:
+```c
+n = fread(a, sizeof(a[0]), sizeof(a) / sizeof(a[0]), fp);
+```
+
+**MUST CHECK REUTRN VALUE OF fread**
+* The return value is the "number of elements read", not number of bytes
+* should equal number of the third argument
+* unless eof is reached before then.
+
+Errors
+* feof()
+* ferror()
+* can be used to determine the reason for the shortage
+
+
+### fread
+`fwrite(const void *, unsigned long, unsigned long, FILE *)`
+
+* convenient to store data in file before terminating the program
+* later program can use `fread` to read the data back into memory
+* can be used to write anything bytes to memory
+* be careful with data that use pointers
